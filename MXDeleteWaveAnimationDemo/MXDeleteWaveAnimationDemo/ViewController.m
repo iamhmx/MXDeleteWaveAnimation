@@ -23,7 +23,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.title = @"长按删除";
+    self.title = @"MXDeleteWaveAnimationDemo";
     self.dataSource = [NSMutableArray new];
     self.colorArray = [NSMutableArray new];
     for (NSInteger i = 0; i < 20; i++) {
