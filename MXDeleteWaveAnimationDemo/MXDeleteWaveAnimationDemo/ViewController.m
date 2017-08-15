@@ -135,10 +135,17 @@
     id obj = self.dataSource[sourceIndexPath.row];
     id color = self.colorArray[sourceIndexPath.row];
     [self.dataSource removeObjectAtIndex:sourceIndexPath.row];
-    [self.dataSource insertObject:obj atIndex:destinationIndexPath.item];
+    [self.dataSource insertObject:obj atIndex:destinationIndexPath.row];
     
     [self.colorArray removeObjectAtIndex:sourceIndexPath.row];
     [self.colorArray insertObject:color atIndex:destinationIndexPath.row];
+    
+    //移动完成后要修改index有变化的cell，否则删除会错乱
+    for (NSInteger i = MIN(destinationIndexPath.row, sourceIndexPath.row); i < MAX(destinationIndexPath.row, sourceIndexPath.row) + 1; i++) {
+        NSIndexPath *indexPath = [NSIndexPath indexPathForRow:i inSection:0];
+        CollectionViewCell *cell = (CollectionViewCell*)[self.collectionView cellForItemAtIndexPath:[NSIndexPath indexPathForRow:i inSection:0]];
+        cell.indexPath = indexPath;
+    }
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSKeyValueChangeKey,id> *)change context:(void *)context {

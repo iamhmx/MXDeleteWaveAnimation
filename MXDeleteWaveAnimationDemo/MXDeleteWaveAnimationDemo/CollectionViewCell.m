@@ -16,6 +16,7 @@
 @property (assign, nonatomic) CGFloat x;
 @property (assign, nonatomic) CGFloat y;
 @property (weak, nonatomic) IBOutlet UIButton *deleteButton;
+@property (weak, nonatomic) IBOutlet UILabel *indexLabel;
 @end
 
 @implementation CollectionViewCell
@@ -27,6 +28,11 @@
     /*//添加长按手势
     UILongPressGestureRecognizer *longPressGes = [[UILongPressGestureRecognizer alloc]initWithTarget:self action:@selector(longPressAction:)];
     [self addGestureRecognizer:longPressGes];*/
+}
+
+- (void)setIndexPath:(NSIndexPath *)indexPath {
+    _indexPath = indexPath;
+    self.indexLabel.text = [NSString stringWithFormat:@"%ld",indexPath.row];
 }
 
 - (void)setShowDeleteAnimation:(BOOL)showDeleteAnimation {

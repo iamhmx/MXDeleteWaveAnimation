@@ -29,15 +29,24 @@
                             <action selector="deleteAction:" destination="gTV-IL-0wX" eventType="touchUpInside" id="Eiz-A8-fgV"/>
                         </connections>
                     </button>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sB8-hz-8v5">
+                        <rect key="frame" x="36" y="43" width="42" height="21"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <nil key="highlightedColor"/>
+                    </label>
                 </subviews>
             </view>
             <constraints>
+                <constraint firstItem="sB8-hz-8v5" firstAttribute="centerX" secondItem="gTV-IL-0wX" secondAttribute="centerX" id="N6e-a6-suU"/>
                 <constraint firstAttribute="trailing" secondItem="knx-5W-A5c" secondAttribute="trailing" id="WU7-2m-XtZ"/>
+                <constraint firstItem="sB8-hz-8v5" firstAttribute="centerY" secondItem="gTV-IL-0wX" secondAttribute="centerY" id="XQs-cn-N9w"/>
                 <constraint firstItem="knx-5W-A5c" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="eV3-Bf-R6d"/>
             </constraints>
             <size key="customSize" width="115" height="106"/>
             <connections>
                 <outlet property="deleteButton" destination="knx-5W-A5c" id="vgg-KL-tjJ"/>
+                <outlet property="indexLabel" destination="sB8-hz-8v5" id="5ef-dI-FTw"/>
             </connections>
             <point key="canvasLocation" x="57.5" y="80"/>
         </collectionViewCell>
