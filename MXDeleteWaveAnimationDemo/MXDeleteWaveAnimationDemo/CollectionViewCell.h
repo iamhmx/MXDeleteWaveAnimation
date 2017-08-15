@@ -36,4 +36,9 @@
  */
 @property (assign, nonatomic) BOOL showDeleteAnimation;
 
+/**
+ 显示长按选中动画
+ */
+@property (assign, nonatomic) BOOL showLongPressAnimation;
+
 @end

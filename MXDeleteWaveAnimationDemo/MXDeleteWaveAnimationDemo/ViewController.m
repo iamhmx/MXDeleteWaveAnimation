@@ -15,6 +15,16 @@
  删除动画标识
  */
 @property (assign, nonatomic) BOOL readyForDelete;
+
+/**
+ 长按手势
+ */
+@property (strong, nonatomic) UILongPressGestureRecognizer *longPressGes;
+
+/**
+ 长按选中的cell
+ */
+@property (strong, nonatomic) CollectionViewCell *selectedCell;
 @property (strong, nonatomic) NSMutableArray *dataSource;
 @property (strong, nonatomic) NSMutableArray *colorArray;
 @end
@@ -31,7 +41,49 @@
         [self.dataSource addObject:@(1)];
     }
     [self.view addSubview:self.collectionView];
+    
+    //添加长按手势
+    self.longPressGes = [[UILongPressGestureRecognizer alloc]initWithTarget:self action:@selector(longPressAction:)];
+    [self.collectionView addGestureRecognizer:self.longPressGes];
+    
     [self addObserver:self forKeyPath:@"readyForDelete" options:NSKeyValueObservingOptionNew context:nil];
+}
+
+- (void)longPressAction:(UILongPressGestureRecognizer*)ges {
+    switch (ges.state) {
+        case UIGestureRecognizerStateBegan: {
+            NSLog(@"began");
+            NSIndexPath *selectIndexPath = [self.collectionView indexPathForItemAtPoint:[ges locationInView:self.collectionView]];
+            
+            [self.collectionView beginInteractiveMovementForItemAtIndexPath:selectIndexPath];
+            //如果没有处于删除状态，打开删除
+            if (!self.readyForDelete) {
+                self.readyForDelete = YES;
+            }
+            
+            break;
+        }
+            
+        case UIGestureRecognizerStateChanged: {
+            NSLog(@"changed");
+            [self.collectionView updateInteractiveMovementTargetPosition:[ges locationInView:self.collectionView]];
+            break;
+        }
+            
+        case UIGestureRecognizerStateEnded: {
+            NSLog(@"end");
+            [self.collectionView endInteractiveMovement];
+            self.selectedCell.showLongPressAnimation = NO;
+            break;
+        }
+            
+        default: {
+            NSLog(@"cancel");
+            [self.collectionView cancelInteractiveMovement];
+            self.selectedCell.showLongPressAnimation = NO;
+            break;
+        }
+    }
 }
 
 #pragma mark Cell代理
@@ -46,6 +98,9 @@
         [self.collectionView deleteItemsAtIndexPaths:@[indexPath]];
     } completion:^(BOOL finished) {
         [self.collectionView reloadData];
+        if (self.dataSource.count == 0) {
+            self.navigationItem.rightBarButtonItem = nil;
+        }
     }];
 }
 
@@ -65,6 +120,25 @@
     cell.delegate = self;
     cell.showDeleteAnimation = self.readyForDelete;
     return cell;
+}
+
+- (void)collectionView:(UICollectionView *)collectionView moveItemAtIndexPath:(NSIndexPath *)sourceIndexPath toIndexPath:(NSIndexPath *)destinationIndexPath {
+    //id obj = self.dataSource[sourceIndexPath.row];
+    //[self.dataSource removeObjectAtIndex:sourceIndexPath.row];
+    //[self.dataSource insertObject:obj atIndex:destinationIndexPath.item];
+    NSLog(@"source: %ld",sourceIndexPath.row);
+    NSLog(@"destin: %ld",destinationIndexPath.row);
+    /*[self.dataSource exchangeObjectAtIndex:sourceIndexPath.row withObjectAtIndex:destinationIndexPath.row];
+    [self.colorArray exchangeObjectAtIndex:sourceIndexPath.row withObjectAtIndex:destinationIndexPath.row];
+    [self.collectionView reloadData];*/
+    
+    id obj = self.dataSource[sourceIndexPath.row];
+    id color = self.colorArray[sourceIndexPath.row];
+    [self.dataSource removeObjectAtIndex:sourceIndexPath.row];
+    [self.dataSource insertObject:obj atIndex:destinationIndexPath.item];
+    
+    [self.colorArray removeObjectAtIndex:sourceIndexPath.row];
+    [self.colorArray insertObject:color atIndex:destinationIndexPath.row];
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSKeyValueChangeKey,id> *)change context:(void *)context {

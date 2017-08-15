@@ -24,9 +24,9 @@
     [super awakeFromNib];
     self.layer.cornerRadius = 5;
     self.layer.masksToBounds = YES;
-    //添加长按手势
+    /*//添加长按手势
     UILongPressGestureRecognizer *longPressGes = [[UILongPressGestureRecognizer alloc]initWithTarget:self action:@selector(longPressAction:)];
-    [self addGestureRecognizer:longPressGes];
+    [self addGestureRecognizer:longPressGes];*/
 }
 
 - (void)setShowDeleteAnimation:(BOOL)showDeleteAnimation {
@@ -40,6 +40,11 @@
     }
 }
 
+- (void)setShowLongPressAnimation:(BOOL)showLongPressAnimation {
+    _showLongPressAnimation = showLongPressAnimation;
+    [self longPressAnimationDisplay:showLongPressAnimation];
+}
+
 - (void)startDeleteAnimation {
     self.layer.transform = CATransform3DIdentity;
     [self.timer setFireDate:[NSDate distantPast]];
@@ -48,6 +53,22 @@
 - (void)closeDeleteAnimation {
     self.layer.transform = CATransform3DIdentity;
     [self.timer setFireDate:[NSDate distantFuture]];
+}
+
+- (void)longPressAnimationDisplay:(BOOL)display {
+    [UIView animateWithDuration:0.2 animations:^{
+        if (display) {
+            self.layer.transform = CATransform3DMakeScale(1.2, 1.2, 1);
+        } else {
+            self.layer.transform = CATransform3DIdentity;
+        }
+    } completion:^(BOOL finished) {
+        if (display) {
+            self.layer.transform = CATransform3DMakeScale(1.2, 1.2, 1);
+        } else {
+            self.layer.transform = CATransform3DIdentity;
+        }
+    }];
 }
 
 - (void)longPressAction:(id)sender {
