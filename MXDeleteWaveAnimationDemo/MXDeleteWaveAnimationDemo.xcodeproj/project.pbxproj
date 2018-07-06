@@ -286,7 +286,7 @@
 				DEVELOPMENT_TEAM = 3GZ2MLR74W;
 				INFOPLIST_FILE = MXDeleteWaveAnimationDemo/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.msxf.MXDeleteWaveAnimationDemo;
+				PRODUCT_BUNDLE_IDENTIFIER = com.yellow.MXDeleteWaveAnimationDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -298,7 +298,7 @@
 				DEVELOPMENT_TEAM = 3GZ2MLR74W;
 				INFOPLIST_FILE = MXDeleteWaveAnimationDemo/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.msxf.MXDeleteWaveAnimationDemo;
+				PRODUCT_BUNDLE_IDENTIFIER = com.yellow.MXDeleteWaveAnimationDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
@@ -322,6 +322,7 @@
 				9091D0EA1F3DB4810079089F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
